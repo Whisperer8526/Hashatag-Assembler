@@ -1,37 +1,44 @@
-with open("Hash.txt", "r", encoding="UTF-8") as hashtagsAll:
-    hashtagsUnique = set(hashtagsAll.read().split())
+from enum import IntEnum
+import os
+folder = r"‪C:\Users\Lenovo\Desktop\Python\Hashtag Generator"
+folder = folder.lstrip("\u202a")
 
-hashtagList = []
-hintList = ["moody", "dark", "portrait", "portret", "poland", "polska"]
-hashtagCount = 0
-menuChoice = 0
+
+with open(os.path.join(folder, "Hash.txt"), "r", encoding="UTF-8") as file:
+    hashtag_all = set(file.read().split())
+
+export_list = []
+hint_list = ["moody", "dark", "portrait", "portret", "poland", "polska"]
+hashtag_count = 0
+menu_option = 0
 
 Main_Menu = IntEnum("Main_Menu", "generate hintlist exit")
 
 while True:
     print()
-    menuChoice = int(input("What do you wish to do?: 1) Genenerate hashtags 2) Show hint list 3) Exit"))
+    menu_option = int(input("What do you wish to do?: 1) Genenerate hashtags 2) Show hint list 3) Exit"))
 
-    if(menuChoice == Main_Menu.generate):
-        while hashtagCount < 30:
+    if(menu_option == Main_Menu.generate):
+        while hashtag_count < 30:
             print()
-            print("Number of hashtags generated: ", hashtagCount)
-            hashtagCount += how_many_hashtags(choose_phrase())
+            print("Number of hashtags generated: ", hashtag_count)
+            hashtag_count += get_number(get_phrase())
             
-            if hashtagCount == 30:
+            if hashtag_count == 30:
                 print("You have successfully chosen 30 hastags. They have been written to a text file.")
-                with open("HashEXP.txt", "w", encoding="UTF-8") as hashtagsExport:
-                    for hashtag in hashtagList:
-                        hashtagsExport.write(hashtag + " ")
-                hashtagCount = 0
+                with open(os.path.join(folder, "HashEXP.txt"), "w", encoding="UTF-8") as output:
+                    for hashtag in export_list:
+                        output.write(hashtag + " ")
+                hashtag_count = 0
                 break
             
-            elif hashtagCount > 30:
+            elif hashtag_count > 30:
                 print("Too many hashtags. Try again.")
                 
-    elif(menuChoice == Main_Menu.hintlist):
+    elif(menu_option == Main_Menu.hintlist):
         print()
-        print(hintList)
+        print(hint_list)
 
-    elif(menuChoice == Main_Menu.exit):
+    elif(menu_option == Main_Menu.exit):
         break
+
